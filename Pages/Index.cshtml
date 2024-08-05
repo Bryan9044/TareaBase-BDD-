@@ -1,0 +1,53 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Prueba";
+}
+
+<!-- Aqui va toda la parte de html, todos los inputs, titulos, saltos de linea,divisiones, etc-->
+<div class="text-center">
+    <h1 class="display-4">Bienvenido, por favor rellene lo que se le solicita :3</h1>
+    <br />
+
+
+    <!-- Aqui lo dividimos y agregamos todos los id e inputs para validarlos después
+        Ademas el div de estilosInput para aplicarle los cambios del css 
+    -->
+    <div class="estilosInput">
+    <p>Escriba su cédula por favor</p>
+    <label for="idLicense">Cédula:</label>
+    <input id="idLicense" type="number" name="License" />
+
+
+    <br />
+
+    <p>Escriba su nombre por favor</p>
+    <label for ="idName">Nombre:</label>
+    <input id="idName" type="text" name="Name"/>
+
+
+    <br />
+
+    <p>Escriba su fecha de nacimiento por favor</p>
+    <label for="idBirth">Fecha de nacimiento:</label>
+    <input id="idBirth" type="date" name="Birth" />
+
+    <br />
+
+    <p>Escriba su edad por favor</p>
+    <label for="idAge">Edad:</label>
+    <input id="idAge" type="number" name="Age" />
+
+
+    <br />
+
+    <p>Escriba su dirección por favor</p>
+    <label for="idAddress">Dirección:</label>
+    <input id="idAddress" type="text" name="Address" />
+
+    <br />
+    <br />
+    <input type="submit" value="Registrarme"/>
+    </div>
+
+</div>
