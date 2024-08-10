@@ -13,41 +13,90 @@
     <!-- Aqui lo dividimos y agregamos todos los id e inputs para validarlos después
         Ademas el div de estilosInput para aplicarle los cambios del css 
     -->
-    <div class="estilosInput">
-    <p>Escriba su cédula por favor</p>
-    <label for="idLicense">Cédula:</label>
-    <input id="idLicense" type="number" name="License" />
+    <!--Lo del post lo que hago es que a la otra pagina entienda que tiene que aplicarse cuando
+        se le envie el post para que active el OnPostRegister
+    -->
+    <form method="post" asp-page-handler="Register">
+        <div class="estilosInput">
+            <label for="idLicense">Cédula:</label>
+            <input id="idLicense" type="number" name="Input.License" required>
+            <span asp-validation-for="Input.License" class="Error2"></span>
+
+            <br />
+            <br />
+
+            <label for="idName">Nombre:</label>
+            <input id="idName" type="text" name="Input.Name" required/>
+            <!-- Envia el mensaje de error-->
+            <span asp-validation-for="Input.Name" class="Error"></span>
+
+            <br />
+            <br />
+           
+            <label for="idBirth">Fecha de nacimiento:</label>
+            <input id="idBirth" type="date" name="Input.Birth" required />
+
+            <br />
+            <br />
 
 
-    <br />
+            <label for="idAge">Edad:</label>
+            <input id="idAge" type="number" name="Input.Age" required />
 
-    <p>Escriba su nombre por favor</p>
-    <label for ="idName">Nombre:</label>
-    <input id="idName" type="text" name="Name"/>
+            <br />
+            <br />
 
+            <label for="idAddress">Dirección:</label>
+            <input id="idAddress" type="text" name="Input.Address" required />
 
-    <br />
+            <br />
+            <br />
+            <input type="submit" value="Registrarme" />
+        </div>
+    </form>
 
-    <p>Escriba su fecha de nacimiento por favor</p>
-    <label for="idBirth">Fecha de nacimiento:</label>
-    <input id="idBirth" type="date" name="Birth" />
+    <!-- Aquí hacemos otra división para el boton de pacientes y su funcionalidad, igual llamando
+        al onPost
+    -->
+    <form method="post" asp-page-handler="ShowPatients">
+        <button type="submit">Mostrar Pacientes Registrados</button>
+    </form>
 
-    <br />
+    <!-- Aquí hacemos otra división para el boton de ocultar pacientes
+    y hacemos una condicion para que se muestre solo si se activa el de mostrar y el
+    arroba if es una condición que se usa en C# para que se utilice en HTML-->
+    @if (Model.ShowPatients)
+    {
+        <form method="post" asp-page-handler="HidePatients">
+            <button type="submit">Ocultar Pacientes</button>
+        </form>
+    }
 
-    <p>Escriba su edad por favor</p>
-    <label for="idAge">Edad:</label>
-    <input id="idAge" type="number" name="Age" />
-
-
-    <br />
-
-    <p>Escriba su dirección por favor</p>
-    <label for="idAddress">Dirección:</label>
-    <input id="idAddress" type="text" name="Address" />
-
-    <br />
-    <br />
-    <input type="submit" value="Registrarme"/>
-    </div>
-
-</div>
+    <!-- Aquí mostramos la tabla solo si se toco el boton y si hay pacientes en la lista -->
+    @if (Model.ShowPatients && Model.Pacientes != null && Model.Pacientes.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Edad</th>
+                    <th>Dirección</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--Buscamos en la lista de pacientes y sacamos su información uno a uno-->
+                @foreach (var paciente in Model.Pacientes)
+                {
+                    <tr>
+                        <td>@paciente.License</td>
+                        <td>@paciente.Name</td>
+                        <td>@paciente.Birth.ToShortDateString()</td>
+                        <td>@paciente.Age</td>
+                        <td>@paciente.Address</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
